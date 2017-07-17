@@ -6,7 +6,7 @@ import (
 )
 
 
-// Lokasyon Tablosu.
+// Item Tablosu.
 // swagger: model
 type Item struct {
 	// ID
@@ -21,42 +21,44 @@ type Item struct {
 	Description  string `json:"description"`
 	//Birim Şekli
 	UnitofMeasure  string `json:"unitof_measure"`
+	//Barkod Numarası
+	BarcodeNo   string `json:"barcode_no"`
 
 }
 
-func (this Location) CreateTable() {
+func (this Item) CreateTable() {
 	config.DB.DropTable(this)
 	config.DB.CreateTable(this)
 }
 
 
-// Konum bilgileri geridönüş değeri
+// Ürün bilgileri geridönüş değeri
 // swagger:response
-type LocationResponse struct {
+type ItemResponse struct {
 	// in:body
-	Body Location
+	Body Item
 }
 
-// Konum bilgileri
-// swagger:parameters Konum-Oluştur
-type LocationInputPatch struct {
+// Ürün bilgileri
+// swagger:parameters Ürün-Oluştur
+type ItemInputPatch struct {
+	// Ürün Bilgileri
+	// in:body
+	Item Item
+}
+
+// Ürün Güncelle
+// swagger:parameters Ürün-Güncelle
+type ItemInputPUT struct {
 	// Konum Bilgileri
 	// in:body
-	Location Location
-}
-
-// Konum Güncelle
-// swagger:parameters Konum-Güncelle
-type LocationInputPUT struct {
-	// Konum Bilgileri
-	// in:body
-	Location Location
+	Item Item
 }
 
 
-// Konum Bilgisini Getir
-// swagger:parameters Konum-Getir
-type LocationIDQueryGET struct {
+// Ürün Bilgisini Getir
+// swagger:parameters Ürün-Getir
+type ItemIDQueryGET struct {
 	// in:query
 	// type:int
 	ID uint `json:"id"`
@@ -64,9 +66,9 @@ type LocationIDQueryGET struct {
 
 
 
-// Konum Bilgisini Güncelle
-// swagger:parameters Konum-Güncelle
-type KonumIDQueryPUT struct {
+// Ürün Bilgisini Güncelle
+// swagger:parameters Ürün-Güncelle
+type ItemIDQueryPUT struct {
 	// in:query
 	// type:int
 	ID uint `json:"id"`
@@ -74,26 +76,27 @@ type KonumIDQueryPUT struct {
 
 
 
-// Konum Bilgisini Sil
-// swagger:parameters Konum-Sil
-type LocationIDQueryDELETE struct {
+// Ürün Bilgisini Sil
+// swagger:parameters Ürün-Sil
+type ItemIDQueryDELETE struct {
 	// in:query
 	// type:int
 	ID uint `json:"id"`
 }
 
-// Konum bilgilerini excel'den yükle
-// swagger:parameters Konum-Excel-Yükle
-type UploadLocationExcelInput struct {
-	// Konum bilgilerini excel'den yükle
+// Ürün bilgilerini excel'den yükle
+// swagger:parameters Ürün-Excel-Yükle
+type UploadItemExcelInput struct {
+	// Ürün bilgilerini excel'den yükle
 	// in:body
 	Body struct{ ExcelFile string `json:"ExcelFile"` }
 }
 
 
-// Konum Yükle
-// swagger:parameters Konum-Json-Array
-type LocationArrayInputPOST struct {
-	// Konum Bilgileri
+// Ürün Yükle
+// swagger:parameters Ürün-Json-Array
+type ItemArrayInputPOST struct {
+	// Ürün Bilgileri
 	// in:body
-	Location [] Location
+	Item [] Item
+}
