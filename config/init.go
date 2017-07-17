@@ -1,13 +1,24 @@
 package config
 
 import (
-	"github.com/jinzhu/gorm"
-	_ "github.com/lib/pq"
+	"time"
 	"fmt"
-	"log"
-
+	"crypto/md5"
+	"encoding/hex"
 )
 
+
+
+import (
+	"github.com/jinzhu/gorm"
+	_ "github.com/lib/pq"
+	"log"
+)
+
+var MySecretKey = "zQ!a11p+8xbfSU?2y30NA_zura*3AB-777"
+// Kaç günlük geçerli bilet üretilecek
+var TokenExpireDuration = time.Hour * 24 * 40
+var TokenHeaderName = "Bilet"
 var DB *gorm.DB
 
 func InitDB() {
@@ -22,4 +33,8 @@ func InitDB() {
 	log.Println("DB Connected")
 	//AutoMigrate()
 
+}
+func GetMD5Hash(text string) string {
+	hash := md5.Sum([]byte(text))
+	return hex.EncodeToString(hash[:])
 }
