@@ -1,0 +1,14 @@
+{{define "index"}}
+{{template "header" .}}
+
+
+<h1>Sales Performans</h1>
+<h2>Satis yönetimi</h2>
+
+<a href="ping">Piingg</a>
+<form action="/upload/companylogo" method="post" enctype="multipart/form-data">
+    <input type="file" name="logo" accept="image/*">
+    <input type="submit">
+</form>
+{{template "footer" .}}
+{{end}}
