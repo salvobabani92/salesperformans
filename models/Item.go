@@ -75,7 +75,6 @@ type ItemIDQueryPUT struct {
 }
 
 
-
 // Ürün Bilgisini Sil
 // swagger:parameters Ürün-Sil
 type ItemIDQueryDELETE struct {
