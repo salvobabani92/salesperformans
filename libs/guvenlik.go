@@ -6,6 +6,7 @@ import (
 	"github.com/salvobabani92/salesperformans.com/config"
 	"net/http"
 	"github.com/salvobabani92/salesperformans.com/models"
+
 )
 
 func BiletKontrol(c *gin.Context) {
@@ -29,7 +30,7 @@ func BiletKontrol(c *gin.Context) {
 }
 
 // context içinde tanımlı olan kullanıcı bilgilerine ve firma bilgilerine erişim sağlanır.
-func GetUser_Company(c *gin.Context) (models.User, models.Company) {
+func GetUser_Company(c *gin.Context) (models.User, models.Customer) {
 	var tokenStr string = c.Request.Header.Get(config.TokenHeaderName)
 
 	token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
@@ -39,11 +40,11 @@ func GetUser_Company(c *gin.Context) (models.User, models.Company) {
 		var user = models.User{}
 		config.DB.First(&user, int64(ParseToken(tokenStr, "id").(float64)))
 
-		var company = models.Company{}
-		config.DB.First(&company, user.CompanyID)
-		return user, company
+		var customer = models.Customer{}
+		config.DB.First(&customer, user.CustomerID)
+		return user, customer
 
 	} else {
-		return models.User{}, models.Company{}
+		return models.User{}, models.Customer{}
 	}
 }
