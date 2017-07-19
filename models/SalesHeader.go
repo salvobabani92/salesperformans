@@ -23,6 +23,8 @@ type SalesHeader struct {
 	CustomerNo string  `json:"customer_no"`
 	//Müşteri İsmi
 	CustomerName string `json:"customer_name"`
+	//Müşteri Kimliği
+	CustomerID  uint `json:"customer_id"`
 	//Yüzdelik
 	Amount   int64 `json:"amount"`
 }
