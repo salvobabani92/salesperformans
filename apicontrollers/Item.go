@@ -22,7 +22,6 @@ func POST_Item(c *gin.Context) {
 	user, _ := libs.GetUser_Company(c)
 
 	form := models.Item{}
-	form.Customer = user.CustomerID
 
 	if val, hasValue := c.GetPostForm("no"); hasValue {
 		form.No = val
@@ -201,7 +200,6 @@ func Upload_Item_From_Excel(c *gin.Context) {
 						BarcodeNo, _ := curRow.Cells[2].String()
 						UnitofMeasure, _ := curRow.Cells[3].String()
 						form := models.Item{}
-						form.CustomerID = user.CustomerID
 						form.No = No
 						form.Description = Description
 						form.BarcodeNo = BarcodeNo
