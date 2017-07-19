@@ -23,7 +23,7 @@ func POST_Customer(c *gin.Context) {
 	user, _ := libs.GetUser_Company(c)
 
 	form := models.Customer{}
-	form.Customer = user.Customer
+	form.CustomerID = user.Customer
 
 	if val, hasValue := c.GetPostForm("no"); hasValue {
 		form.No = val
@@ -58,11 +58,11 @@ func GET_Customer(c *gin.Context) {
 // Müşteri kaydını getir
 func GET_CustomerByID(c *gin.Context) {
 	log.Println("id'si bilinen bir customer kaydını getir")
-	user, _ := libs.GetUser_Customer(c)
+	user, _ := libs.GetUser_Company(c)
 
 	var Customer models.Customer
 	var id = c.Params.ByName("id")
-	config.DB.Where("company_id = ? AND ID = ?", user.CompanyID, id).First(&Customer)
+	config.DB.Where("customer_id = ? AND ID = ?", user.CustomerID, id).First(&Customer)
 	if Customer.ID != 0 {
 		c.JSON(http.StatusOK, Customer)
 	} else {
@@ -73,7 +73,7 @@ func GET_CustomerByID(c *gin.Context) {
 // Müşteri güncelle
 func PUT_Customer(c *gin.Context) {
 	//TODO: Organizasyon güncelle fonksiyonu yazılacak. CompanyID filtresini dikkate al
-	user, _ := libs.GetUser_Customer(c)
+	user, _ := libs.GetUser_Company(c)
 	form := models.Customer{}
 	var id = c.Params.ByName("id")
 	config.DB.Where("customer_id = ? AND ID = ?", user.CustomerID, id).First(&form)
@@ -102,7 +102,7 @@ func PUT_Customer(c *gin.Context) {
 
 // Müşteri Sil
 func DELETE_Customer(c *gin.Context) {
-	user, _ := libs.GetUser_Customer(c)
+	user, _ := libs.GetUser_Company(c)
 	form := models.Customer{}
 	var id = c.Params.ByName("id")
 	config.DB.Where("customer_id = ? AND ID = ?", user.CustomerID, id).First(&form)
@@ -118,7 +118,7 @@ func Upload_Customer_From_Excel(c *gin.Context) {
 	//TODO: Excel'den bu bilgilerin aktarılması ile ilgili fonksiyon yazılacak. CompanyID filtresini dikkate al
 
 
-	user, _ := libs.GetUser_Customer(c)
+	user, _ := libs.GetUser_Company(c)
 
 	if (user.CustomerID == 0) {
 		c.JSON(http.StatusBadRequest, models.GetGenericStatusResponse("400", "Şirket bilgileriniz yanlış."))
@@ -135,7 +135,7 @@ func Upload_Customer_From_Excel(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, models.GetGenericStatusResponse("400", "Yüklediğiniz dosya excel dosyası değil."))
 	} else {
 
-		var directoryName = "./upload/Customer/" + strconv.FormatUint(uint64(user.customerID), 10) + "/"
+		var directoryName = "./upload/Customer/" + strconv.FormatUint(uint64(user.CustomerID), 10) + "/"
 		exist, _ := libs.FileOrDirectoryExists(directoryName)
 		if exist == false {
 			os.Mkdir(directoryName, 0700)
@@ -178,7 +178,7 @@ func Upload_Customer_From_Excel(c *gin.Context) {
 						No, _ := curRow.Cells[0].String()
 						Name, _:= curRow.Cells[1].String()
 						form := models.Customer{}
-						form.CustomerID = user.CustomerID
+						form.CustomerID = user.Customer
 						form.No = No
 						form.Name = Name
 
