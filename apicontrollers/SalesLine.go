@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/salvobabani92/salesperformans.com/config"
 	"github.com/salvobabani92/salesperformans.com/models"
+	"github.com/salvobabani92/salesperformans.com/libs"
 	"net/http"
 	"log"
 	"path/filepath"
@@ -49,10 +50,10 @@ func POST_SalesLine(c *gin.Context) {
 
 // Satış Sırası Listesini getir
 func GET_SalesLine(c *gin.Context) {
-	user, _ := libs.GetUser_Customer(c)
+	user, _ := libs.GetUser_Company(c)
 	// Get all matched records
 
-	var Item  []models.SalesLine
+	var SalesLine  []models.SalesLine
 	config.DB.Where("customer_id = ?", user.CustomerID).Find(&SalesLine)
 	c.JSON(http.StatusOK, SalesLine)
 }
@@ -141,7 +142,7 @@ func Upload_SalesLine_From_Excel(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, models.GetGenericStatusResponse("400", "Yüklediğiniz dosya excel dosyası değil."))
 	} else {
 
-		var directoryName = "./upload/SalesLine/" + strconv.FormatUint(uint64(user.customerID), 10) + "/"
+		var directoryName = "./upload/SalesLine/" + strconv.FormatUint(uint64(user.CustomerID), 10) + "/"
 		exist, _ := libs.FileOrDirectoryExists(directoryName)
 		if exist == false {
 			os.Mkdir(directoryName, 0700)
