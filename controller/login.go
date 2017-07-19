@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/salvobabani92/salesperformans.com/models"
 	"github.com/salvobabani92/salesperformans.com/config"
+	"github.com/salvobabani92/salesperformans.com/libs"
 	"log"
 
 	"net/http"
@@ -55,7 +56,6 @@ func Register(c *gin.Context) {
 		user.Name = c.PostForm("name")
 		user.LastName = c.PostForm("lastname")
 		user.Hash = config.GetMD5Hash(c.PostForm("password"))
-		user.CustomerID = customer.ID
 		user.Active = true
 		user.LanguageCode = "TRK"
 
