@@ -23,7 +23,6 @@ func POST_Customer(c *gin.Context) {
 	user, _ := libs.GetUser_Company(c)
 
 	form := models.Customer{}
-	form.CustomerID = user.Customer
 
 	if val, hasValue := c.GetPostForm("no"); hasValue {
 		form.No = val
@@ -178,7 +177,6 @@ func Upload_Customer_From_Excel(c *gin.Context) {
 						No, _ := curRow.Cells[0].String()
 						Name, _:= curRow.Cells[1].String()
 						form := models.Customer{}
-						form.CustomerID = user.Customer
 						form.No = No
 						form.Name = Name
 
