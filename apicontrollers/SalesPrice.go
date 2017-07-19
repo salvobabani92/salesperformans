@@ -23,7 +23,6 @@ func POST_SalesPrice(c *gin.Context) {
 	user, _ := libs.GetUser_Company(c)
 
 	form := models.SalesPrice{}
-	form.Customer = user.CustomerID
 
 	if val, hasValue := c.GetPostForm("type"); hasValue {
 		form.Type = val
@@ -64,7 +63,7 @@ func GET_SalesPrice(c *gin.Context) {
 }
 
 // Satış Fiyatı kaydını getir
-func GET_SalesLineByID(c *gin.Context) {
+func GET_SalesPriceByID(c *gin.Context) {
 	log.Println("id'si bilinen bir Satış Fiyatı kaydını getir")
 	user, _ := libs.GetUser_Company(c)
 
@@ -117,7 +116,7 @@ func PUT_SalesPrice(c *gin.Context) {
 
 
 // Satış Fiyatı Sil
-func DELETE_SalesLine(c *gin.Context) {
+func DELETE_SalesPrice(c *gin.Context) {
 	user, _ := libs.GetUser_Company(c)
 	form := models.SalesPrice{}
 	var id = c.Params.ByName("id")
