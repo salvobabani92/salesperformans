@@ -22,10 +22,23 @@ func POST_SalesHeader(c *gin.Context) {
 	user, _ := libs.GetUser_Company(c)
 
 	form := models.SalesHeader{}
-	form.Customer = user.CustomerID
+
 
 	if val, hasValue := c.GetPostForm("no"); hasValue {
 		form.No = val
+	}
+
+	if val, hasValue := c.GetPostForm("customer_no"); hasValue {
+		form.CustomerNo = val
+	}
+
+	if val, hasValue := c.GetPostForm("customer_name"); hasValue {
+		form.CustomerName = val
+	}
+
+	if val, hasValue := c.GetPostForm("customer_ID"); hasValue {
+		uintVal, _ := strconv.ParseUint(val, 10, 64)
+		form.Amount = int64(uintVal)
 	}
 
 	if val, hasValue := c.GetPostForm("amount"); hasValue {
@@ -33,14 +46,6 @@ func POST_SalesHeader(c *gin.Context) {
 		form.Amount = int64(int64Val)
 	}
 
-	if val, hasValue := c.GetPostForm("unit_of_measure_ID"); hasValue {
-		uintVal, _ := strconv.ParseUint(val, 10, 64)
-		form.UnitofMeasureID = uint(uintVal)
-	}
-
-	if val, hasValue := c.GetPostForm("unit_of_measure_code"); hasValue {
-		form.UnitofMeasureCode = val
-	}
 
 	if config.DB.NewRecord(&form) {
 		config.DB.Create(&form)
@@ -60,7 +65,7 @@ func GET_SalesHeader(c *gin.Context) {
 
 	var SalesHeader  []models.SalesHeader
 	config.DB.Where("customer_id = ?", user.CustomerID).Find(&SalesHeader)
-	c.JSON(http.StatusOK, Item)
+	c.JSON(http.StatusOK, SalesHeader)
 }
 
 // Satış Başlığı kaydını getir
@@ -93,18 +98,22 @@ func PUT_SalesHeader(c *gin.Context) {
 			form.No = val
 		}
 
+		if val, hasValue := c.GetPostForm("customer_no"); hasValue {
+			form.CustomerNo = val
+		}
+
+		if val, hasValue := c.GetPostForm("customer_name"); hasValue {
+			form.CustomerName = val
+		}
+
+		if val, hasValue := c.GetPostForm("customer_ID"); hasValue {
+			uintVal, _ := strconv.ParseUint(val, 10, 64)
+			form.Amount = int64(uintVal)
+		}
+
 		if val, hasValue := c.GetPostForm("amount"); hasValue {
 			int64Val, _ := strconv.ParseUint(val, 10, 64)
 			form.Amount = int64(int64Val)
-		}
-
-		if val, hasValue := c.GetPostForm("unit_of_measure_ID"); hasValue {
-			uintVal, _ := strconv.ParseUint(val, 10, 64)
-			form.UnitofMeasureID = uint(uintVal)
-		}
-
-		if val, hasValue := c.GetPostForm("unit_of_measure_code"); hasValue {
-			form.UnitofMeasureCode = val
 		}
 
 		if config.DB.NewRecord(&form) {
@@ -193,18 +202,19 @@ func Upload_SalesHeader_From_Excel(c *gin.Context) {
 					rowNumber ++
 					if rowNumber > 1 {
 						No, _ := curRow.Cells[0].String()
+						CustomerName, _ := curRow.Cells[1].String()
+						CustomerNo, _ := curRow.Cells[2].String()
 
-						sVal, _ := curRow.Cells[1].String()
+						sVal, _ := curRow.Cells[3].String()
 						idVal, _ := strconv.ParseUint(sVal, 10, 64)
 						Amount := int64(idVal)
 
-						UnitofMeasureCode, _ := curRow.Cells[2].String()
-
 						form := models.SalesHeader{}
-						form.CustomerID = user.CustomerID
 						form.No = No
+						form.CustomerName = CustomerName
+						form.CustomerNo = CustomerNo
 						form.Amount = Amount
-						form.UnitofMeasureCode = UnitofMeasureCode
+
 
 
 						if config.DB.NewRecord(&form) {
