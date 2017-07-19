@@ -201,10 +201,10 @@ func Upload_Item_From_Excel(c *gin.Context) {
 						UnitofMeasure, _ := curRow.Cells[3].String()
 						form := models.Item{}
 						form.CustomerID = user.CustomerID
-						form.No = no
-						form.Description = description
-						form.BarcodeNo = barcodeno
-						form.UnitofMeasure = unitofmeasure
+						form.No = No
+						form.Description = Description
+						form.BarcodeNo = BarcodeNo
+						form.UnitofMeasure = UnitofMeasure
 
 						if config.DB.NewRecord(&form) {
 							config.DB.Create(&form)
@@ -221,7 +221,7 @@ func Upload_Item_From_Excel(c *gin.Context) {
 }
 
 // Konum bilgilerini batchjob olarak aktarılması
-func Upload_Location_From_Json_Array(c *gin.Context) {
+func Upload_Item_From_Json_Array(c *gin.Context) {
 	//TODO: Json içersinde array olarak içeri aktarılması ile ilgili fonksiyon yazılacak. Bu fonksiyon upsert gibi çalışacak. CompanyID filtresini dikkate al
 
 }
