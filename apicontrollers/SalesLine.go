@@ -22,7 +22,7 @@ func POST_SalesLine(c *gin.Context) {
 	user, _ := libs.GetUser_Company(c)
 
 	form := models.SalesLine{}
-	form.Customer = user.CustomerID
+
 
 	if val, hasValue := c.GetPostForm("document_no"); hasValue {
 		form.DocumentNo = val
@@ -35,6 +35,33 @@ func POST_SalesLine(c *gin.Context) {
 	if val, hasValue := c.GetPostForm("Item_ID"); hasValue {
 		uintVal, _ := strconv.ParseUint(val, 10, 64)
 		form.ItemID = uint(uintVal)
+	}
+
+	if val, hasValue := c.GetPostForm("Item_name"); hasValue {
+		form.ItemName = val
+	}
+
+	if val, hasValue := c.GetPostForm("quantity"); hasValue {
+		form.Quantity = val
+	}
+
+	if val, hasValue := c.GetPostForm("unit_price"); hasValue {
+		form.UnitPrice = val
+	}
+
+	if val, hasValue := c.GetPostForm("amount"); hasValue {
+		int64Val, _ := strconv.ParseUint(val, 10, 64)
+		form.Amount = int64(int64Val)
+	}
+
+	if val, hasValue := c.GetPostForm("VAT"); hasValue {
+		int64Val, _ := strconv.ParseUint(val, 10, 64)
+		form.VAT = int64(int64Val)
+	}
+
+	if val, hasValue := c.GetPostForm("VAT_amount"); hasValue {
+		int64Val, _ := strconv.ParseUint(val, 10, 64)
+		form.VATAmount = int64(int64Val)
 	}
 
 	if config.DB.NewRecord(&form) {
@@ -185,9 +212,30 @@ func Upload_SalesLine_From_Excel(c *gin.Context) {
 						DocumentNo, _ := curRow.Cells[0].String()
 						LineNo, _ := curRow.Cells[1].String()
 
+						ItemName, _ := curRow.Cells[2].String()
+						Quantity, _ := curRow.Cells[3].String()
+						UnitPrice, _ := curRow.Cells[4].String()
+
+						sVal, _ := curRow.Cells[5].String()
+						idVal, _ := strconv.ParseUint(sVal, 10, 64)
+						Amount := int64(idVal)
+
+						sVal, _ = curRow.Cells[6].String()
+						idVal, _ = strconv.ParseUint(sVal, 10, 64)
+						VAT := int64(idVal)
+
+						sVal, _ = curRow.Cells[7].String()
+						idVal, _ = strconv.ParseUint(sVal, 10, 64)
+						VATAmount := int64(idVal)
+
 
 						form := models.SalesLine{}
-						form.CustomerID = user.CustomerID
+						form.ItemName = ItemName
+						form.Quantity = Quantity
+						form.UnitPrice = UnitPrice
+						form.Amount = Amount
+						form.VAT = VAT
+						form.VATAmount = VATAmount
 						form.DocumentNo = DocumentNo
 						form.LineNo = LineNo
 
