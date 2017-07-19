@@ -21,7 +21,20 @@ type SalesLine struct {
 	DocumentNo string `json:"document_no"`
 	// Sıra Numarası
 	LineNo string `json:"line_no"`
+	// Ürün kimiği
+	ItemName  string `json:"item_name"`
+	//Miktarı
+	Quantity string `json:"quantity"`
+	//Ürün Fiyatı
+	UnitPrice string `json:"unit_price"`
+	// Yüzdelik
+	Amount int64 `json:"amount"`
+	//Vergisi
+	VAT int64 `json:"vat"`
+	// Vergi Yüzdesi
+	VATAmount int64 `json:"vat_amount"`
 	ItemID uint `json:"item_id"`
+	// Ürün İlişkisi
 	Item Item `json:"_"`
 
 }
