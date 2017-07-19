@@ -5,14 +5,10 @@ import (
 	"fmt"
 	"crypto/md5"
 	"encoding/hex"
-)
-
-
-
-import (
 	"github.com/jinzhu/gorm"
-	_ "github.com/lib/pq"
 	"log"
+	_ "github.com/lib/pq"
+
 )
 
 var MySecretKey = "zQ!a11p+8xbfSU?2y30NA_zura*3AB-777"
