@@ -124,6 +124,34 @@ func PUT_SalesLine(c *gin.Context) {
 			form.ItemID = uint(uintVal)
 		}
 
+		if val, hasValue := c.GetPostForm("Item_name"); hasValue {
+			form.ItemName = val
+		}
+
+		if val, hasValue := c.GetPostForm("quantity"); hasValue {
+			form.Quantity = val
+		}
+
+		if val, hasValue := c.GetPostForm("unit_price"); hasValue {
+			form.UnitPrice = val
+		}
+
+		if val, hasValue := c.GetPostForm("amount"); hasValue {
+			int64Val, _ := strconv.ParseUint(val, 10, 64)
+			form.Amount = int64(int64Val)
+		}
+
+		if val, hasValue := c.GetPostForm("VAT"); hasValue {
+			int64Val, _ := strconv.ParseUint(val, 10, 64)
+			form.VAT = int64(int64Val)
+		}
+
+		if val, hasValue := c.GetPostForm("VAT_amount"); hasValue {
+			int64Val, _ := strconv.ParseUint(val, 10, 64)
+			form.VATAmount = int64(int64Val)
+		}
+
+
 		if config.DB.NewRecord(&form) {
 			config.DB.Create(&form)
 		}
