@@ -25,12 +25,6 @@ type SalesHeader struct {
 	CustomerName string `json:"customer_name"`
 	//Yüzdelik
 	Amount   int64 `json:"amount"`
-	UnitofMeasureID uint `json:"unitof_measure_id"`
-	UnitofMeasureCode string `json:"unitof_measure_code"`
-	UnitofMeasure  UnitofMeasure `json:"_"`
-
-
-
 }
 
 func (this SalesHeader) CreateTable() {
