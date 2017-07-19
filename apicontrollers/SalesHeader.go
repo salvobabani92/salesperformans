@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/salvobabani92/salesperformans.com/config"
 	"github.com/salvobabani92/salesperformans.com/models"
+	"github.com/salvobabani92/salesperformans.com/libs"
 	"net/http"
 	"log"
 	"path/filepath"
@@ -54,10 +55,10 @@ func POST_SalesHeader(c *gin.Context) {
 
 // Satış Başlığı Listesini getir
 func GET_SalesHeader(c *gin.Context) {
-	user, _ := libs.GetUser_Customer(c)
+	user, _ := libs.GetUser_Company(c)
 	// Get all matched records
 
-	var Item  []models.SalesHeader
+	var SalesHeader  []models.SalesHeader
 	config.DB.Where("customer_id = ?", user.CustomerID).Find(&SalesHeader)
 	c.JSON(http.StatusOK, Item)
 }
@@ -67,11 +68,11 @@ func GET_SalesHeaderByID(c *gin.Context) {
 	log.Println("id'si bilinen bir satış başlığı kaydını getir")
 	user, _ := libs.GetUser_Company(c)
 
-	var Item models.SalesHeader
+	var SalesHeader models.SalesHeader
 	var id = c.Params.ByName("id")
-	config.DB.Where("company_id = ? AND ID = ?", user.CustomerID, id).First(&Item)
+	config.DB.Where("company_id = ? AND ID = ?", user.CustomerID, id).First(&SalesHeader)
 	if SalesHeader.ID != 0 {
-		c.JSON(http.StatusOK, Item)
+		c.JSON(http.StatusOK, SalesHeader)
 	} else {
 		c.JSON(http.StatusNotFound, models.GetGenericStatusResponse("404", "Kayıt bulunamadı."))
 	}
@@ -151,7 +152,7 @@ func Upload_SalesHeader_From_Excel(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, models.GetGenericStatusResponse("400", "Yüklediğiniz dosya excel dosyası değil."))
 	} else {
 
-		var directoryName = "./upload/SalesHeader/" + strconv.FormatUint(uint64(user.customerID), 10) + "/"
+		var directoryName = "./upload/SalesHeader/" + strconv.FormatUint(uint64(user.CustomerID), 10) + "/"
 		exist, _ := libs.FileOrDirectoryExists(directoryName)
 		if exist == false {
 			os.Mkdir(directoryName, 0700)
@@ -162,7 +163,7 @@ func Upload_SalesHeader_From_Excel(c *gin.Context) {
 		form.UserID = user.ID
 
 		form.FileExtension = extension
-		form.RelatedTableName = "salesheader"
+		form.RelatedTableName = "SalesHeader"
 
 		if config.DB.NewRecord(&form) {
 			config.DB.Create(&form)
