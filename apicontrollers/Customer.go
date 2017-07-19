@@ -17,7 +17,7 @@ import (
 )
 
 
-// Ürün oluştur
+// Müşteri oluştur
 func POST_Customer(c *gin.Context) {
 
 	user, _ := libs.GetUser_Company(c)
@@ -70,7 +70,7 @@ func GET_CustomerByID(c *gin.Context) {
 	}
 }
 
-// Ürün güncelle
+// Müşteri güncelle
 func PUT_Customer(c *gin.Context) {
 	//TODO: Organizasyon güncelle fonksiyonu yazılacak. CompanyID filtresini dikkate al
 	user, _ := libs.GetUser_Customer(c)
@@ -100,7 +100,7 @@ func PUT_Customer(c *gin.Context) {
 }
 
 
-// Ürün Sil
+// Müşteri Sil
 func DELETE_Customer(c *gin.Context) {
 	user, _ := libs.GetUser_Customer(c)
 	form := models.Customer{}
@@ -113,8 +113,8 @@ func DELETE_Customer(c *gin.Context) {
 	}
 }
 
-// Ürün Bilgilerini Excel ile içeri aktar
-func Upload_Item_From_Excel(c *gin.Context) {
+// Müşteri Bilgilerini Excel ile içeri aktar
+func Upload_Customer_From_Excel(c *gin.Context) {
 	//TODO: Excel'den bu bilgilerin aktarılması ile ilgili fonksiyon yazılacak. CompanyID filtresini dikkate al
 
 
@@ -179,8 +179,8 @@ func Upload_Item_From_Excel(c *gin.Context) {
 						Name, _:= curRow.Cells[1].String()
 						form := models.Customer{}
 						form.CustomerID = user.CustomerID
-						form.No = no
-						form.Name = name
+						form.No = No
+						form.Name = Name
 
 
 						if config.DB.NewRecord(&form) {
@@ -197,8 +197,8 @@ func Upload_Item_From_Excel(c *gin.Context) {
 	}
 }
 
-// Konum bilgilerini batchjob olarak aktarılması
-func Upload_Location_From_Json_Array(c *gin.Context) {
+// Müşteri bilgilerini batchjob olarak aktarılması
+func Upload_Customer_From_Json_Array(c *gin.Context) {
 	//TODO: Json içersinde array olarak içeri aktarılması ile ilgili fonksiyon yazılacak. Bu fonksiyon upsert gibi çalışacak. CompanyID filtresini dikkate al
 
 }
