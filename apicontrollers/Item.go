@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/salvobabani92/salesperformans.com/config"
 	"github.com/salvobabani92/salesperformans.com/models"
+	"github.com/salvobabani92/salesperformans.com/libs"
 	"net/http"
 	"log"
 	"path/filepath"
@@ -56,7 +57,7 @@ func POST_Item(c *gin.Context) {
 
 // Ürün Listesini getir
 func GET_Item(c *gin.Context) {
-	user, _ := libs.GetUser_Customer(c)
+	user, _ := libs.GetUser_Company(c)
 	// Get all matched records
 
 	var Item  []models.Item
@@ -155,7 +156,7 @@ func Upload_Item_From_Excel(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, models.GetGenericStatusResponse("400", "Yüklediğiniz dosya excel dosyası değil."))
 	} else {
 
-		var directoryName = "./upload/Item/" + strconv.FormatUint(uint64(user.customerID), 10) + "/"
+		var directoryName = "./upload/Item/" + strconv.FormatUint(uint64(user.CustomerID), 10) + "/"
 		exist, _ := libs.FileOrDirectoryExists(directoryName)
 		if exist == false {
 			os.Mkdir(directoryName, 0700)
@@ -220,7 +221,7 @@ func Upload_Item_From_Excel(c *gin.Context) {
 	}
 }
 
-// Konum bilgilerini batchjob olarak aktarılması
+// Ürün bilgilerini batchjob olarak aktarılması
 func Upload_Item_From_Json_Array(c *gin.Context) {
 	//TODO: Json içersinde array olarak içeri aktarılması ile ilgili fonksiyon yazılacak. Bu fonksiyon upsert gibi çalışacak. CompanyID filtresini dikkate al
 
