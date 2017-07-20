@@ -14,13 +14,12 @@ import (
 	"io"
 	"github.com/tealeg/xlsx"
 
+
 )
 
 
 // Müşteri oluştur
 func POST_Customer(c *gin.Context) {
-
-	user, _ := libs.GetUser_Company(c)
 
 	form := models.Customer{}
 
@@ -32,6 +31,13 @@ func POST_Customer(c *gin.Context) {
 		form.Name = val
 	}
 
+	if val, hasValue := c.GetPostForm("last_name"); hasValue {
+		form.LastName = val
+	}
+
+	if val, hasValue := c.GetPostForm("email"); hasValue {
+		form.Email = val
+	}
 
 	if config.DB.NewRecord(&form) {
 		config.DB.Create(&form)
@@ -88,6 +94,13 @@ func PUT_Customer(c *gin.Context) {
 			form.Name = val
 		}
 
+		if val, hasValue := c.GetPostForm("last_name"); hasValue {
+			form.LastName = val
+		}
+
+		if val, hasValue := c.GetPostForm("email"); hasValue {
+			form.Email = val
+		}
 
 		if config.DB.NewRecord(&form) {
 			config.DB.Create(&form)
@@ -176,9 +189,14 @@ func Upload_Customer_From_Excel(c *gin.Context) {
 					if rowNumber > 1 {
 						No, _ := curRow.Cells[0].String()
 						Name, _:= curRow.Cells[1].String()
+						LastName, _:= curRow.Cells[2].String()
+						Email, _:= curRow.Cells[3].String()
+
 						form := models.Customer{}
 						form.No = No
 						form.Name = Name
+						form.LastName = LastName
+						form.Email = Email
 
 
 						if config.DB.NewRecord(&form) {
