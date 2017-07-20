@@ -19,8 +19,6 @@ import (
 // Satış Sırası oluştur
 func POST_SalesLine(c *gin.Context) {
 
-	user, _ := libs.GetUser_Company(c)
-
 	form := models.SalesLine{}
 
 
