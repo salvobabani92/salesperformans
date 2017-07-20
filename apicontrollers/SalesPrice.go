@@ -20,8 +20,6 @@ import (
 // Satış Fiyatı oluştur
 func POST_SalesPrice(c *gin.Context) {
 
-	user, _ := libs.GetUser_Company(c)
-
 	form := models.SalesPrice{}
 
 	if val, hasValue := c.GetPostForm("type"); hasValue {
