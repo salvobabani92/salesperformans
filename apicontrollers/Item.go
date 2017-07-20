@@ -19,16 +19,11 @@ import (
 // Ürün oluştur
 func POST_Item(c *gin.Context) {
 
-	user, _ := libs.GetUser_Company(c)
 
 	form := models.Item{}
 
 	if val, hasValue := c.GetPostForm("no"); hasValue {
 		form.No = val
-	}
-
-	if val, hasValue := c.GetPostForm("description"); hasValue {
-		form.Description = val
 	}
 
 	if val, hasValue := c.GetPostForm("barcode_no"); hasValue {
@@ -94,9 +89,6 @@ func PUT_Item(c *gin.Context) {
 			form.No = val
 		}
 
-		if val, hasValue := c.GetPostForm("description"); hasValue {
-			form.Description = val
-		}
 
 		if val, hasValue := c.GetPostForm("barcode_no"); hasValue {
 			form.BarcodeNo = val
