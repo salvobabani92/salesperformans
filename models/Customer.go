@@ -15,7 +15,11 @@ type Customer struct {
 	No				uint `json:"no"`
 	//Müşteri Adı
 	Name			string `json:"name" sql:"type:varchar(250);" CaptionML:"trk=Müşteri Adı;enu=Customer Name"`
-
+	// Kullanıcı Mail Adresi
+	// required: true
+	Email       string `json:"email" sql:"type:varchar(120)" CaptionML:"enu=Email;trk=Email"`
+	// Kullanıcının Soyadı
+	LastName     string `json:"last_name" sql:"type:varchar(120);" CaptionML:"enu=Last Name;trk=Soyadı"`
 }
 
 func (this Customer) CreateTable() {
