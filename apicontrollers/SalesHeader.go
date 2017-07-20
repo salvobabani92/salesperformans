@@ -19,8 +19,6 @@ import (
 // Satış Başlığı oluştur
 func POST_SalesHeader(c *gin.Context) {
 
-	user, _ := libs.GetUser_Company(c)
-
 	form := models.SalesHeader{}
 
 
