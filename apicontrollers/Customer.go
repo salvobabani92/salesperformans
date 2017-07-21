@@ -24,7 +24,8 @@ func POST_Customer(c *gin.Context) {
 	form := models.Customer{}
 
 	if val, hasValue := c.GetPostForm("no"); hasValue {
-		form.No = val
+		uintVal, _ := strconv.ParseUint(val, 10, 64)
+		form.No = uint(uintVal)
 	}
 
 	if val, hasValue := c.GetPostForm("name"); hasValue {
@@ -87,7 +88,8 @@ func PUT_Customer(c *gin.Context) {
 	} else {
 
 		if val, hasValue := c.GetPostForm("no"); hasValue {
-			form.No = val
+			uintVal, _ := strconv.ParseUint(val, 10, 64)
+			form.No = uint(uintVal)
 		}
 
 		if val, hasValue := c.GetPostForm("name"); hasValue {
@@ -154,7 +156,6 @@ func Upload_Customer_From_Excel(c *gin.Context) {
 		}
 
 		form := models.Upload{}
-		form.Customer = user.CustomerID
 		form.UserID = user.ID
 
 		form.FileExtension = extension
@@ -187,7 +188,10 @@ func Upload_Customer_From_Excel(c *gin.Context) {
 				for _, curRow := range sheet.Rows {
 					rowNumber ++
 					if rowNumber > 1 {
-						No, _ := curRow.Cells[0].String()
+						sVal, _ := curRow.Cells[0].String()
+						idVal, _ := strconv.ParseUint(sVal, 10, 64)
+						No := uint(idVal)
+
 						Name, _:= curRow.Cells[1].String()
 						LastName, _:= curRow.Cells[2].String()
 						Email, _:= curRow.Cells[3].String()
