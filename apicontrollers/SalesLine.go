@@ -202,7 +202,6 @@ func Upload_SalesLine_From_Excel(c *gin.Context) {
 		}
 
 		form := models.Upload{}
-		form.Customer = user.CustomerID
 		form.UserID = user.ID
 
 		form.FileExtension = extension
