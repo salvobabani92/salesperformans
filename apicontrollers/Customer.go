@@ -40,6 +40,18 @@ func POST_Customer(c *gin.Context) {
 		form.Email = val
 	}
 
+	if val, hasValue := c.GetPostForm("address"); hasValue {
+		form.Address = val
+	}
+
+	if val, hasValue := c.GetPostForm("post_code"); hasValue {
+		form.PostCode = val
+	}
+
+	if val, hasValue := c.GetPostForm("phone"); hasValue {
+		form.Phone = val
+	}
+
 	if config.DB.NewRecord(&form) {
 		config.DB.Create(&form)
 	}
@@ -102,6 +114,18 @@ func PUT_Customer(c *gin.Context) {
 
 		if val, hasValue := c.GetPostForm("email"); hasValue {
 			form.Email = val
+		}
+
+		if val, hasValue := c.GetPostForm("address"); hasValue {
+			form.Address = val
+		}
+
+		if val, hasValue := c.GetPostForm("post_code"); hasValue {
+			form.PostCode = val
+		}
+
+		if val, hasValue := c.GetPostForm("phone"); hasValue {
+			form.Phone = val
 		}
 
 		if config.DB.NewRecord(&form) {
@@ -195,12 +219,18 @@ func Upload_Customer_From_Excel(c *gin.Context) {
 						Name, _:= curRow.Cells[1].String()
 						LastName, _:= curRow.Cells[2].String()
 						Email, _:= curRow.Cells[3].String()
+						Address, _:= curRow.Cells[4].String()
+						PostCode, _:= curRow.Cells[5].String()
+						Phone, _:= curRow.Cells[6].String()
 
 						form := models.Customer{}
 						form.No = No
 						form.Name = Name
 						form.LastName = LastName
 						form.Email = Email
+						form.Address = Address
+						form.PostCode = PostCode
+						form.Phone = Phone
 
 
 						if config.DB.NewRecord(&form) {
