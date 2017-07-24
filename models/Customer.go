@@ -26,6 +26,8 @@ type Customer struct {
 	PostCode  string  `json:"post_code"`
 	//Müşteri Telefon Numarası
 	Phone string  `json:"phone"`
+	//Şehir
+	City  string  `json:"city"`
 
 }
 
