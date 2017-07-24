@@ -24,7 +24,7 @@ type Customer struct {
 	Address  string `json:"address" sql:"type:varchar(120)" CaptionML:"enu=Address; trk=Adres"`
 	//Posta Kodu
 	PostCode  string  `json:"post_code"`
-	//Müşteri Telefonu
+	//Müşteri Telefon Numarası
 	Phone string  `json:"phone"`
 
 }
