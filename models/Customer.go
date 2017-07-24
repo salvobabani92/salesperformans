@@ -20,6 +20,13 @@ type Customer struct {
 	Email       string `json:"email" sql:"type:varchar(120)" CaptionML:"enu=Email;trk=Email"`
 	// Kullanıcının Soyadı
 	LastName     string `json:"last_name" sql:"type:varchar(120);" CaptionML:"enu=Last Name;trk=Soyadı"`
+	//Müşteri Adresi
+	Address  string `json:"address" sql:"type:varchar(120)" CaptionML:"enu=Address; trk=Adres"`
+	//Posta Kodu
+	PostCode  string  `json:"post_code"`
+	//Müşteri Telefonu
+	Phone string  `json:"phone"`
+
 }
 
 func (this Customer) CreateTable() {
