@@ -1,0 +1,16 @@
+{
+  "name": "salesperformans.com",
+  "version": "0.0.1",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-install": "^1.1.0",
+    "gulp-livereload": "*",
+    "gulp-sync": "*",
+    "gulp-util": "*",
+    "node-notifier": "*"
+  },
+  "dependencies": {
+    "gulp-install": "^1.1.0"
+  }
+}
+
